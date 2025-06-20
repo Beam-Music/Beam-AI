@@ -421,7 +421,9 @@ def get_vc(sid, to_return_protect0, to_return_protect1):
     global n_spk, tgt_sr, net_g, vc, cpt, version
     if sid == "" or sid == []:
         global hubert_model
-        if hubert_model is not None:  # 考虑到轮询, 需要加个判断看是否 sid 是由有模型切换到无模型的
+        if (
+            hubert_model is not None
+        ):  # 考虑到轮询, 需要加个判断看是否 sid 是由有模型切换到无模型的
             print("clean_empty_cache")
             del net_g, n_spk, vc, hubert_model, tgt_sr  # ,cpt
             hubert_model = net_g = n_spk = vc = hubert_model = tgt_sr = None
@@ -1179,7 +1181,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                     refresh_button = gr.Button(
                         i18n("음색 목록과 인덱스 경로 새로고침"), variant="primary"
                     )
-                    clean_button = gr.Button(i18n("음색 언로드하여 메모리 절약"), variant="primary")
+                    clean_button = gr.Button(
+                        i18n("음색 언로드하여 메모리 절약"), variant="primary"
+                    )
                 spk_item = gr.Slider(
                     minimum=0,
                     maximum=2333,
@@ -1197,7 +1201,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                     with gr.Row():
                         with gr.Column():
                             vc_transform0 = gr.Number(
-                                label=i18n("음정 변경(정수, 반음 단위, 옥타브 상승 12, 하강 -12)"),
+                                label=i18n(
+                                    "음정 변경(정수, 반음 단위, 옥타브 상승 12, 하강 -12)"
+                                ),
                                 value=0,
                             )
                             input_audio0 = gr.Textbox(
@@ -1235,7 +1241,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                             resample_sr0 = gr.Slider(
                                 minimum=0,
                                 maximum=48000,
-                                label=i18n("후처리 리샘플링 최종 샘플링 레이트, 0은 리샘플링 하지 않음"),
+                                label=i18n(
+                                    "후처리 리샘플링 최종 샘플링 레이트, 0은 리샘플링 하지 않음"
+                                ),
                                 value=0,
                                 step=1,
                                 interactive=True,
@@ -1300,7 +1308,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                         with gr.Row():
                             vc_output1 = gr.Textbox(label=i18n("출력 정보"))
                             vc_output2 = gr.Audio(
-                                label=i18n("출력 오디오(우측 하단 세 점을 클릭하여 다운로드)")
+                                label=i18n(
+                                    "출력 오디오(우측 하단 세 점을 클릭하여 다운로드)"
+                                )
                             )
 
                         but0.click(
@@ -1332,14 +1342,18 @@ with gr.Blocks(title="RVC WebUI") as app:
                 with gr.Row():
                     with gr.Column():
                         vc_transform1 = gr.Number(
-                            label=i18n("음정 변경(정수, 반음 단위, 옥타브 상승 12, 하강 -12)"),
+                            label=i18n(
+                                "음정 변경(정수, 반음 단위, 옥타브 상승 12, 하강 -12)"
+                            ),
                             value=0,
                         )
                         opt_input = gr.Textbox(
                             label=i18n("출력 폴더 지정"), value="opt"
                         )
                         file_index3 = gr.Textbox(
-                            label=i18n("특징 검색 라이브러리 파일 경로, 비워두면 드롭다운 선택 결과 사용"),
+                            label=i18n(
+                                "특징 검색 라이브러리 파일 경로, 비워두면 드롭다운 선택 결과 사용"
+                            ),
                             value="",
                             interactive=True,
                         )
@@ -1541,7 +1555,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                     interactive=True,
                 )
                 if_f0_3 = gr.Radio(
-                    label=i18n("모델이 음높이 지도를 가지고 있습니다(노래를 부를 때는 필요, 음성은 선택사항)"),
+                    label=i18n(
+                        "모델이 음높이 지도를 가지고 있습니다(노래를 부를 때는 필요, 음성은 선택사항)"
+                    ),
                     choices=[True, False],
                     value=True,
                     interactive=True,
@@ -1605,7 +1621,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                             visible=F0GPUVisible,
                         )
                         gpu_info9 = gr.Textbox(
-                            label=i18n("그래픽스 정보"), value=gpu_info, visible=F0GPUVisible
+                            label=i18n("그래픽스 정보"),
+                            value=gpu_info,
+                            visible=F0GPUVisible,
                         )
                     with gr.Column():
                         f0method8 = gr.Radio(
@@ -1646,7 +1664,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                         api_name="train_extract_f0_feature",
                     )
             with gr.Group():
-                gr.Markdown(value=i18n("step3: 훈련 설정 입력, 모델 및 인덱스 훈련 시작"))
+                gr.Markdown(
+                    value=i18n("step3: 훈련 설정 입력, 모델 및 인덱스 훈련 시작")
+                )
                 with gr.Row():
                     save_epoch10 = gr.Slider(
                         minimum=1,
@@ -1781,7 +1801,9 @@ with gr.Blocks(title="RVC WebUI") as app:
 
         with gr.TabItem(i18n("ckpt 처리")):
             with gr.Group():
-                gr.Markdown(value=i18n("모델 통합, 테스트 음색 통합에 사용할 수 있습니다"))
+                gr.Markdown(
+                    value=i18n("모델 통합, 테스트 음색 통합에 사용할 수 있습니다")
+                )
                 with gr.Row():
                     ckpt_a = gr.Textbox(
                         label=i18n("A 모델 경로"), value="", interactive=True
@@ -1847,7 +1869,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                 )  # def merge(path1,path2,alpha1,sr,f0,info):
             with gr.Group():
                 gr.Markdown(
-                    value=i18n("모델 정보 수정(weights 폴더에서 추출한 작은 모델 파일만 지원)")
+                    value=i18n(
+                        "모델 정보 수정(weights 폴더에서 추출한 작은 모델 파일만 지원)"
+                    )
                 )
                 with gr.Row():
                     ckpt_path0 = gr.Textbox(
@@ -1876,7 +1900,9 @@ with gr.Blocks(title="RVC WebUI") as app:
                 )
             with gr.Group():
                 gr.Markdown(
-                    value=i18n("모델 정보 확인(weights 폴더에서 추출한 작은 모델 파일만 지원)")
+                    value=i18n(
+                        "모델 정보 확인(weights 폴더에서 추출한 작은 모델 파일만 지원)"
+                    )
                 )
                 with gr.Row():
                     ckpt_path1 = gr.Textbox(

@@ -210,18 +210,30 @@ class SparkTTS:
         ]
 
         # Decode the generated tokens into text
-        predicts = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        predicts = self.tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[
+            0
+        ]
 
         # Extract semantic token IDs from the generated text
         pred_semantic_ids = (
-            torch.tensor([int(token) for token in re.findall(r"bicodec_semantic_(\d+)", predicts)])
+            torch.tensor(
+                [
+                    int(token)
+                    for token in re.findall(r"bicodec_semantic_(\d+)", predicts)
+                ]
+            )
             .long()
             .unsqueeze(0)
         )
 
         if gender is not None:
             global_token_ids = (
-                torch.tensor([int(token) for token in re.findall(r"bicodec_global_(\d+)", predicts)])
+                torch.tensor(
+                    [
+                        int(token)
+                        for token in re.findall(r"bicodec_global_(\d+)", predicts)
+                    ]
+                )
                 .long()
                 .unsqueeze(0)
                 .unsqueeze(0)

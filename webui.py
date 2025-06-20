@@ -108,10 +108,7 @@ def build_ui(model_dir, device=0):
         prompt_text_clean = None if len(prompt_text) < 2 else prompt_text
 
         audio_output_path = run_tts(
-            text,
-            model,
-            prompt_text=prompt_text_clean,
-            prompt_speech=prompt_speech
+            text, model, prompt_text=prompt_text_clean, prompt_speech=prompt_speech
         )
         return audio_output_path
 
@@ -126,11 +123,7 @@ def build_ui(model_dir, device=0):
         pitch_val = LEVELS_MAP_UI[int(pitch)]
         speed_val = LEVELS_MAP_UI[int(speed)]
         audio_output_path = run_tts(
-            text,
-            model,
-            gender=gender,
-            pitch=pitch_val,
-            speed=speed_val
+            text, model, gender=gender, pitch=pitch_val, speed=speed_val
         )
         return audio_output_path
 
@@ -230,40 +223,32 @@ def parse_arguments():
         "--model_dir",
         type=str,
         default="pretrained_models/Spark-TTS-0.5B",
-        help="Path to the model directory."
+        help="Path to the model directory.",
     )
     parser.add_argument(
         "--device",
         type=int,
         default=0,
-        help="ID of the GPU device to use (e.g., 0 for cuda:0)."
+        help="ID of the GPU device to use (e.g., 0 for cuda:0).",
     )
     parser.add_argument(
         "--server_name",
         type=str,
         default="0.0.0.0",
-        help="Server host/IP for Gradio app."
+        help="Server host/IP for Gradio app.",
     )
     parser.add_argument(
-        "--server_port",
-        type=int,
-        default=7860,
-        help="Server port for Gradio app."
+        "--server_port", type=int, default=7860, help="Server port for Gradio app."
     )
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     # Parse command-line arguments
     args = parse_arguments()
 
     # Build the Gradio demo by specifying the model directory and GPU device
-    demo = build_ui(
-        model_dir=args.model_dir,
-        device=args.device
-    )
+    demo = build_ui(model_dir=args.model_dir, device=args.device)
 
     # Launch Gradio with the specified server name and port
-    demo.launch(
-        server_name=args.server_name,
-        server_port=args.server_port
-    )
+    demo.launch(server_name=args.server_name, server_port=args.server_port)

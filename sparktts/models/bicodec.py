@@ -43,7 +43,7 @@ class BiCodec(nn.Module):
         speaker_encoder: nn.Module,
         prenet: nn.Module,
         postnet: nn.Module,
-        **kwargs
+        **kwargs,
     ) -> None:
         """
         Initializes the BiCodec model with the required components.
@@ -73,12 +73,12 @@ class BiCodec(nn.Module):
 
         Args:
             model_dir (Path): Path to the model directory containing checkpoint and config.
-        
+
         Returns:
             BiCodec: The initialized BiCodec model.
         """
-        ckpt_path = f'{model_dir}/model.safetensors'
-        config = load_config(f'{model_dir}/config.yaml')['audio_tokenizer']
+        ckpt_path = f"{model_dir}/model.safetensors"
+        config = load_config(f"{model_dir}/config.yaml")["audio_tokenizer"]
         mel_params = config["mel_params"]
         encoder = Encoder(**config["encoder"])
         quantizer = FactorizedVectorQuantize(**config["quantizer"])
@@ -116,7 +116,7 @@ class BiCodec(nn.Module):
 
         Args:
             batch (dict): A dictionary containing features, reference waveform, and target waveform.
-        
+
         Returns:
             dict: A dictionary containing the reconstruction, features, and other metrics.
         """
@@ -212,6 +212,7 @@ class BiCodec(nn.Module):
 
     def remove_weight_norm(self):
         """Removes weight normalization from all layers."""
+
         def _remove_weight_norm(m):
             try:
                 torch.nn.utils.remove_weight_norm(m)
